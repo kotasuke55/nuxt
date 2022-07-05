@@ -4,7 +4,7 @@
     <div class="login">
       <div class="inner">
         <h2>ログイン</h2>
-        <validation-Observer ref="obs" v-solt="ObserverProps">
+        <validation-Observer ref="obs" v-slot="ObserverProps">
           <validation-provider v-slot="{ errors }" rules="required|email">
             <input type="email" name="メールアドレス" v-model="email" placeholder="メールアドレス">
             <div class="error">{{ errors[0] }}</div>
@@ -13,7 +13,7 @@
             <input type="password" name="パスワード" v-model="password" placeholder="パスワード">
             <div class="error">{{errors[0]}}</div>
           </validation-provider>
-          <button @click="login">ログイン</button>
+          <button @click="login" :disabled="ObserverProps.invalid || !ObserverProps.validated">ログイン</button>
         </validation-Observer>
       </div>
     </div>
@@ -65,3 +65,4 @@ export default {
   }
 }
 </script>
+
