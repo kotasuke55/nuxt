@@ -1,29 +1,29 @@
 <template>
   <div>
     <Header></Header>
-    <div class="register">
-      <div class="inner">
-        <h2>新規登録</h2>
-        <form>
-          <validation-Observer ref="obs" v-solt="ObserverProps">
-            <validation-provider v-slot="{ errors }" rules="required|max:20">
-              <input type="text" name="ユーザー名" v-model="name" placeholder="ユーザー名">
-              <div class="error">{{ errors[0] }}</div>
-            </validation-provider>
-            <validation-provider v-slot="{ errors }" rules="required|email">
-              <input type="email" name="メールアドレス" v-model="email" placeholder="メールアドレス">
-              <div class="error">{{ errors[0] }}</div>
-            </validation-provider>
-            <validation-provider v-slot="{errors}" rules="required|min:6">
-              <input type="password" name="パスワード" v-model="password" placeholder="パスワード">
-              <div class="error">{{errors[0]}}</div>
-            </validation-provider>
-            <button @click="register">新規登録</button>
-          </validation-Observer>
-        </form>
+      <div class="register">
+        <div class="inner">
+          <h2>新規登録</h2>
+          <form>
+             <validation-Observer ref="obs" v-solt="ObserverProps">
+              <validation-provider v-slot="{ errors }" rules="required|max:20">
+                <input type="text" name="ユーザー名" v-model="name" placeholder="ユーザー名">
+                <div class="error">{{ errors[0] }}</div>
+              </validation-provider>
+              <validation-provider v-slot="{ errors }" rules="required|email">
+                <input type="email" name="メールアドレス" v-model="email" placeholder="メールアドレス">
+                <div class="error">{{ errors[0] }}</div>
+              </validation-provider>
+              <validation-provider v-slot="{errors}" rules="required|min:6">
+                <input type="password" name="パスワード" v-model="password" placeholder="パスワード">
+                <div class="error">{{errors[0]}}</div>
+              </validation-provider>
+              <button @click="register">新規登録</button>
+            </validation-Observer>
+          </form>
+        </div>
       </div>
-    </div>
-
+    
   </div>
 </template>
 
