@@ -4,7 +4,7 @@
     <div class="register">
       <div class="inner">
         <h2>新規登録</h2>
-        <form>
+        
           <validation-Observer ref="obs" v-slot="ObserverProps">
             <validation-provider v-slot="{ errors }" rules="required|max:20">
               <input type="text" name="ユーザー名" v-model="name" placeholder="ユーザー名">
@@ -20,7 +20,7 @@
             </validation-provider>
             <button @click="register" :disabled="ObserverProps.invalid || !ObserverProps.validated">新規登録</button>
           </validation-Observer>
-        </form>
+       
       </div>
     </div>
 
@@ -72,7 +72,7 @@ export default {
         email: this.email,
         password: this.password
       };
-      await this.$axios.post("http://127.0.0.1:8000/api/person/", sendData);
+      await this.$axios.post("http://127.0.0.1:8000/api/user/", sendData);
    }
   }
 }

@@ -3,6 +3,13 @@
     <Sideber></Sideber>
     <div class="home">
       <h2 class="home__ttl">ホーム</h2>
+      <table>
+        <tr v-for="item in postlist" :key="item.id">
+          <th>{{item.content}}</th>
+          <th></th>
+        </tr>
+        <tr></tr>
+      </table>
     </div>
   </div>
 
@@ -11,7 +18,21 @@
 <script>
 import Sideber from '~/components/Sideber.vue';
 export default {
-  components: { Sideber }
+  data() {
+    return {
+      postlist:[]
+    }
+  },
+  components: { Sideber },
+  methods: {
+    async getPosts() {
+      const resData = await this.$axios.get('http://127.0.0.1:8000/api/post/');
+      this.postlist = resData.data.data;
+    },
+  },
+  created() {
+    this.getPosts();
+  }
 }
 </script>
 
