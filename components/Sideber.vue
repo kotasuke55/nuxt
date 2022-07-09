@@ -19,35 +19,56 @@
       <button type="button" class="share__btn" @click="addShare"
         :disabled="ObserverProps.invalid || !ObserverProps.validated">シェアする</button>
     </validation-observer>
+    <p>{{message}}</p>
   </div>
 </template>
 
  <script>
- import firebase from '~/plugins/firebase'
- export default {
-   data() {
-     return {
-       share:''
-     };
-   },
-   methods: {
-     logout() {
-       firebase
-         .auth()
-         .signOut()
-         .then(() => {
-           alert('ログアウトが完了しました')
-           this.$router.replace('/login')
-         })
-     },
-     async addShare() {
-       const sendData = {
-         content: this.content
-       };
-       await this.$axios.post("http://127.0.0.1:8000/api/post/", sendData);
-   }
- }
- }
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import firebase from '~/plugins/firebase'
+export default {
+  data() {
+    return {
+      share: '',
+      message: 'logout',
+    };
+  },
+  
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          alert('ログアウトが完了しました')
+          this.$router.replace('/login')
+        })
+    },
+    async addShare() {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const uid = user.uid;
+          const sendData = {
+            user_id: uid,
+            content: this.content
+          }
+        } else {
+          return this.$router.replace('/login')
+        }
+      });
+      await this.$axios.post("http://127.0.0.1:8000/api/post/", sendData);
+    },
+
+  },
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.message = 'ログイン済みです'
+      }
+    })
+  }
+}
  </script>
  
  <style>

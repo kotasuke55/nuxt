@@ -16,7 +16,9 @@
 </template>
 
 <script>
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Sideber from '~/components/Sideber.vue';
+
 export default {
   data() {
     return {
@@ -26,6 +28,7 @@ export default {
   components: { Sideber },
   methods: {
     async getPosts() {
+      
       const resData = await this.$axios.get('http://127.0.0.1:8000/api/post/');
       this.postlist = resData.data.data;
     },
